@@ -13,10 +13,10 @@ db_test_() ->
               [db_insert(Db),
                db_insert_busy(Db),
                db_get(Db),
-               db_get_nothing(Db),
+               db_get_none(Db),
                db_delete(Db),
                db_update(Db),
-               db_update_nothing(Db)
+               db_update_none(Db)
               ]
       end}
     }.
@@ -39,19 +39,19 @@ db_get(Db) ->
     Db1 = db:insert(Db, 1, "34"),
     ?_assertEqual("34", db:get(Db1, 1)).
 
-db_get_nothing(Db) ->
-    ?_assertEqual(nothing, db:get(Db, 1)).
+db_get_none(Db) ->
+    ?_assertEqual(none, db:get(Db, 1)).
 
 db_update(Db) ->
     Db1 = db:insert(Db, 1, "34"),
     Db2 = db:update(Db1, 1, "123"),
     ?_assertEqual("123", db:get(Db2, 1)).
 
-db_update_nothing(Db) ->
-    ?_assertEqual(nothing, db:update(Db, 1, "34")).
+db_update_none(Db) ->
+    ?_assertEqual(none, db:update(Db, 1, "34")).
 
 db_delete(Db) ->
     Db1 = db:insert(Db, 1, "34"),
     ?_assertEqual("34", db:get(Db1, 1)),
     Db2 = db:delete(Db,1),
-    ?_assertEqual(nothing, db:get(Db2, 1)).
+    ?_assertEqual(none, db:get(Db2, 1)).
