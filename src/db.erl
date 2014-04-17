@@ -6,25 +6,25 @@ create_db() ->
     [].
 
 get(Db, Key) ->
-    case [X || X <- Db, element(1, X) == Key] of
-        [] -> none;
-        [H | T] -> element(2, H)
+    case [Value || {Key, Value} <- Db] of
+        [] -> {error, none};
+        [Value | _T] -> {ok, Value}
     end.
 
 insert(Db, Key, Value) ->
     case get(Db, Key) of
-        none -> [{Key, Value} | Db];
-        _Value -> key_is_busy
+       {error, none} -> {ok, [{Key, Value} | Db]};
+        {ok, _Value} -> {error, key_is_busy}
     end.
 
 update(Db, Key, Value) ->
     case get(Db, Key) of
-        none -> none;
-        _Value -> 
-            Db1 = delete(Db, Key),
+        {error, none} -> {error, none};
+        {ok, _Value} -> 
+            {ok, Db1} = delete(Db, Key),
             insert(Db1, Key, Value)
     end.
 
 delete(Db, Key) ->
-    [X || X <- Db, element(1, X) =/= Key].
+    {ok, [X || X <- Db, element(1, X) =/= Key]}.
     
