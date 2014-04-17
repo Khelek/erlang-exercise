@@ -5,11 +5,12 @@
 create_db() ->
     [].
 
-get(Db, Key) ->
-    case [Value || {Key, Value} <- Db] of
-        [] -> {error, none};
-        [Value | _T] -> {ok, Value}
-    end.
+get([], Key) ->
+    {error, none};
+get([{Key, Value} | T], Key) ->
+    {ok, Value};
+get([H | T], Key) ->
+    get(T, Key).
 
 insert(Db, Key, Value) ->
     case get(Db, Key) of
