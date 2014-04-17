@@ -1,0 +1,1 @@
+-record(db_record, {key, value}).

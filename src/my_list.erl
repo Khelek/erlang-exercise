@@ -19,11 +19,16 @@ quick_sort([OneEl]) ->
 quick_sort([H | Tail]) ->
     quick_sort([X || X <- Tail, X < H]) ++ [H] ++ quick_sort([X || X <- Tail, X >= H]).
 
-flatten(ListOfLists) when is_list(ListOfLists) ->
+flatten(ListOfLists) ->
     lists:reverse(flatten([], ListOfLists)).
+
 flatten(Acc, [H | Tail]) ->
     flatten(flatten(Acc, H), Tail);
 flatten(Acc, []) ->
     Acc;
 flatten(Acc, NoList) ->
     [NoList | Acc].
+
+% алгебраический тип данных
+% размеченное объединение множеств
+% proplist
