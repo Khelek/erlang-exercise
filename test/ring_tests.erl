@@ -6,7 +6,7 @@ db_test_() ->
     {spawn,
      {setup,
       fun start/0,
-      fun(_) -> stop() end,
+      fun stop/1,
       fun(Setup) ->
               [
               ]
@@ -19,7 +19,8 @@ start() ->
 stop(_) ->
     ok.
 
-echo_test() ->
+ring_test() ->
+    % rewrite
     Pid = echo_server:start(),
     Pid ! {self(), echo},
     receive
